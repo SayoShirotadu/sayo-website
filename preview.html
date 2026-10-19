@@ -79,21 +79,37 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
 @media(prefers-reduced-motion:reduce){.om-reel.om-turning span,.om-reel.om-settled span{animation:none}}
 
 
-/* Fixed tracks keep the entire machine steady, including hidden controls. */
-.om-machine{display:grid;width:100%;height:48rem;grid-template-columns:minmax(0,1fr);grid-template-rows:44px 134px minmax(0,1fr) 44px 38px 54px 42px;gap:12px;overflow-anchor:none}
-.om-machine>div,.om-machine>button,.om-machine>p{min-width:0;min-height:0;margin:0}
+/* Compact frame: the left column sets the shared desktop height. */
+.om-layout{align-items:stretch}
+.om-intro>:last-child{margin-bottom:0}
+.om-machine{display:grid;width:100%;height:auto;min-height:0;padding:20px;contain:size;grid-template-columns:minmax(0,1fr) max-content;grid-template-rows:28px 74px minmax(0,1fr) 36px 44px 24px;gap:10px;overflow-anchor:none}
+.om-machine>div,.om-machine>button,.om-machine>p{grid-column:1 / -1;min-width:0;min-height:0;margin:0}
 .om-machine-top{grid-row:1;overflow:hidden}
-.om-reels{grid-row:2;height:100%;min-height:0}
-.om-reel{height:100%;min-height:0}
+.om-machine-top h3{font-size:16px;line-height:1.4}
+.om-machine-top .tag{line-height:1.5}
+.om-reels{grid-row:2;height:100%;min-height:0;padding:8px;gap:8px;border-radius:13px}
+.om-reel{height:100%;min-height:0;font-size:30px;border-radius:8px}
 .om-outcome{grid-row:3;height:100%;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;overflow-wrap:anywhere;overscroll-behavior:contain}
-.om-outcome:focus-visible{outline:2px solid var(--purple);outline-offset:5px}
-.om-choices{grid-row:4;align-items:stretch;flex-wrap:nowrap}
-.om-choices button{white-space:nowrap}
-.om-change{grid-row:5;justify-self:start;align-self:stretch}
-.om-spin{grid-row:6;height:54px;min-height:54px;white-space:nowrap}
-.om-machine>.quiet{grid-row:7;margin:0;align-self:center;line-height:1.7}
-.om-machine>noscript{grid-row:3;grid-column:1;background:#251b30;z-index:1}
-@media(max-width:480px){.om-machine{height:49rem;grid-template-rows:44px 105px minmax(0,1fr) 44px 38px 54px 42px}}
+.om-outcome h4{font-size:20px;line-height:1.4;margin-bottom:5px}
+.om-outcome p{font-size:12px;line-height:1.7}
+.om-outcome ol{margin-top:10px;gap:6px;font-size:13px;line-height:1.7}
+.om-outcome.om-quote li{padding:10px 12px}
+.om-outcome:focus-visible{outline:2px solid var(--purple);outline-offset:3px}
+.om-machine>.om-choices{grid-row:4;grid-column:1;align-items:stretch;flex-wrap:nowrap;gap:7px}
+.om-choices button{white-space:nowrap;font-size:11px;padding:6px 10px}
+.om-machine>.om-change{grid-row:4;grid-column:2;justify-self:end;align-self:stretch;white-space:nowrap;font-size:11px}
+.om-spin{grid-row:5;display:grid;place-items:center;height:44px;min-height:44px;padding:0 14px;font-size:14px;line-height:1.4;white-space:nowrap;border-radius:12px}
+.om-machine>.quiet{grid-row:6;margin:0;align-self:center;line-height:1.5}
+.om-machine>noscript{grid-row:3;grid-column:1 / -1;background:#251b30;z-index:1}
+@media(max-width:850px){.om-machine{contain:none;height:31rem}}
+@media(max-width:480px){
+  .om-machine{height:32rem;padding:16px;grid-template-columns:minmax(0,1fr);grid-template-rows:28px 68px minmax(0,1fr) 32px 26px 44px 34px;gap:8px}
+  .om-reel{font-size:27px}
+  .om-machine>.om-choices{grid-column:1}
+  .om-machine>.om-change{grid-row:5;grid-column:1;justify-self:start;padding:2px 0}
+  .om-spin{grid-row:6}
+  .om-machine>.quiet{grid-row:7}
+}
 
 </style></head><body>
 <a class="skip-link" href="#home">本文へ移動</a>
