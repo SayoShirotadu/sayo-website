@@ -48,9 +48,39 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
 @media(max-width:700px){.welcome-note,.contact{grid-template-columns:1fr}.welcome-note>div+div{border-left:0;border-top:1px solid var(--line);padding:20px 0 0}.product-grid{grid-template-columns:1fr 1fr}.preview-notice a{display:inline-block}.hero .lead br{display:none}.hero .lead{max-width:32em}.hero h1{font-size:clamp(29px,7vw,35px)}.live-facts>div{grid-template-columns:5.5em minmax(0,1fr)}}
 @media(max-width:480px){.product-grid{grid-template-columns:1fr}.product-copy{padding:22px}.product h4{font-size:18px}.nav{flex-wrap:wrap;gap:5px}.brand{font-size:22px}nav{gap:13px}nav a{padding:6px 0}.preview-notice{padding:10px 16px}.preview-notice strong{display:block;margin:0}}
 @media(prefers-reduced-motion:reduce){.product-photo img{transition:none}.product-photo:hover img{transform:none}}
+
+/* Omislo: self-contained web mini game */
+.om-section{border-top:1px solid var(--line);scroll-margin-top:95px}
+.om-layout{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:40px;align-items:start}
+.om-intro h2{font-size:36px;margin:12px 0 20px}.om-intro>p{font-size:14px;max-width:31em}
+.om-rules{margin:24px 0}.om-rules>div{display:grid;grid-template-columns:7.5em 1fr;gap:14px;align-items:center;padding:15px 0;border-top:1px solid var(--line);font-size:13px}
+.om-rules dt{color:#efc7f7;font-weight:700}.om-rules dd{margin:0}.om-reference{font-size:11px!important;color:#c7b7d0}.om-reference a{text-underline-offset:4px}
+.om-machine{min-width:0;border:1px solid #816294;border-radius:25px;padding:28px;background:radial-gradient(ellipse at 50% 0%,#4a2d5a70,transparent 65%),#251b30;box-shadow:0 16px 38px #08040e38}
+.om-machine-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.om-machine-top h3{font-size:18px;margin:0}.om-machine-top .tag{font-size:10px;letter-spacing:1px}.om-stars{color:#dab8f4;letter-spacing:5px;font-size:13px}
+.om-reels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px;border-radius:19px;border:1px solid #604672;background:#140d1c;overflow:hidden}
+.om-reel{height:100px;display:grid;place-items:center;overflow:hidden;border:1px solid #6c527b;border-radius:12px;background:linear-gradient(#36253f,#4b345a 48%,#30213a);font-size:clamp(32px,4.2vw,50px);line-height:1}
+.om-reel span{display:block;filter:drop-shadow(0 3px 3px #08040e55)}
+.om-reel.om-turning span{animation:om-roll .16s linear infinite}.om-reel.om-settled span{animation:om-settle .24s ease-out}
+@keyframes om-roll{from{transform:translateY(-11px);opacity:.65}to{transform:translateY(11px);opacity:1}}
+@keyframes om-settle{0%{transform:translateY(-12px)}65%{transform:translateY(3px)}100%{transform:translateY(0)}}
+.om-outcome{margin:22px 0 18px;min-height:112px}.om-outcome h4{font-size:24px;line-height:1.5;margin:0 0 7px;color:#e5ccf7}.om-outcome p{margin:0;font-size:13px;color:#d7c9e0}
+.om-outcome[data-kind="triple"] h4{color:#f1d397}.om-outcome[data-kind="good"] h4{color:#f4bad8}
+.om-outcome ol{padding-left:1.5em;margin:16px 0 0;display:grid;gap:12px;font-size:15px;line-height:1.9}
+.om-outcome.om-quote ol{list-style:none;padding-left:0}.om-outcome.om-quote li{padding:16px;border-left:3px solid #c9a2de;background:#ffffff06;border-radius:0 10px 10px 0}
+.om-choices{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 14px}.om-choices button{font-size:12px;padding:8px 13px}
+.om-change{background:transparent;border:0;border-radius:6px;padding:7px 0;margin:0 0 16px;text-decoration:underline;text-underline-offset:4px;font-size:12px;color:#dbc1eb}
+.om-spin{display:block;width:100%;padding:15px 18px;font-size:15px;border-radius:15px;min-height:54px}
+.om-machine button:disabled{opacity:.65;cursor:wait}.om-choices[hidden],.om-change[hidden],.om-prompts[hidden]{display:none}
+.om-machine .quiet{margin:13px 0 0;text-align:center;font-size:11px!important}
+.om-machine[data-state="triple"]{border-color:#c6a76f;box-shadow:0 12px 40px #d2a94716}
+@media(max-width:850px){.om-layout{grid-template-columns:1fr;gap:24px}.om-intro>p{max-width:none}.om-rules{margin-bottom:14px}.om-machine{max-width:560px;width:100%;justify-self:center}.om-reel{font-size:46px}}
+@media(max-width:480px){.om-machine{padding:20px}.om-intro h2{font-size:30px}.om-reels{gap:8px;padding:12px}.om-reel{height:79px;font-size:36px}.om-rules>div{grid-template-columns:7em 1fr;gap:8px}.om-machine-top h3{font-size:16px}.om-outcome h4{font-size:23px}nav{flex-wrap:wrap;justify-content:flex-end;gap:8px 12px}.nav{gap:8px}.om-outcome ol{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.om-reel.om-turning span,.om-reel.om-settled span{animation:none}}
+
 </style></head><body>
 <a class="skip-link" href="#home">本文へ移動</a>
-<aside class="preview-notice" aria-label="テストページのご案内"><strong>更新案のテストページ</strong>2026.10.19 · 内容・見た目の確認用です。<a href="./">現在の公開ページを見る ↗</a></aside><header><div class="nav"><a class="brand" href="#home">さよ<span aria-hidden="true">.</span><small>LIVE & CREATE</small></a><nav aria-label="メインメニュー"><a href="#live">配信</a><a href="#works">作品</a><a href="#about">さよについて</a><a href="#contact">お問い合わせ</a></nav></div></header><main id="home"><div class="hero"><div><div class="eyebrow">SAYO / LIVE & CREATE</div><h1>お話する、作る。<br>どちらも、<em>さよ</em>。</h1><p class="lead">Vライバー「鴉夜さよ」と、<br>クリエイター「しろたづさよ」。<br>配信に会いに来たあなたも、作品を探しているあなたも。<br>ここから、気になるほうへどうぞ。</p><div class="jump"><a class="button primary" href="https://reality.app/profile/c2cb73a0?adj_t=8ogcewh_z9yhix5" target="_blank" rel="noopener noreferrer">REALITYで鴉夜さよに会う ↗</a><a class="button" href="#works">作品を見てみる ↓</a></div></div><div class="art hero-emblem" aria-label="黒猫と青い目の黒い鴉が囲むSayo"><div class="orbit"><div class="monogram">Sayo</div></div><img class="hero-cat" src="assets/black-cat.png" alt="さよねこ" width="180" height="180"><img class="hero-raven" src="assets/blue-eyed-raven.png" alt="さよがらす（青い目の黒い鴉）" width="180" height="180"><span class="star star-top" aria-hidden="true">✧</span><span class="star star-bottom" aria-hidden="true">✧</span><span class="caption">LIVE &amp; CREATE</span></div></div><section aria-labelledby="entrance"><div class="eyebrow">FIND YOUR WAY</div><h2 id="entrance">今日は、どちらのさよに？</h2><div class="two"><article class="card" id="live"><span class="tag">V LIVER</span><h3>鴉夜さよ<span class="name-reading">からすや さよ / Karasuya Sayo</span></h3>
+<aside class="preview-notice" aria-label="テストページのご案内"><strong>更新案のテストページ</strong>2026.10.19 · 内容・見た目の確認用です。<a href="./">現在の公開ページを見る ↗</a></aside><header><div class="nav"><a class="brand" href="#home">さよ<span aria-hidden="true">.</span><small>LIVE & CREATE</small></a><nav aria-label="メインメニュー"><a href="#live">配信</a><a href="#omislo">おみスロ</a><a href="#works">作品</a><a href="#about">さよについて</a><a href="#contact">お問い合わせ</a></nav></div></header><main id="home"><div class="hero"><div><div class="eyebrow">SAYO / LIVE & CREATE</div><h1>お話する、作る。<br>どちらも、<em>さよ</em>。</h1><p class="lead">Vライバー「鴉夜さよ」と、<br>クリエイター「しろたづさよ」。<br>配信に会いに来たあなたも、作品を探しているあなたも。<br>ここから、気になるほうへどうぞ。</p><div class="jump"><a class="button primary" href="https://reality.app/profile/c2cb73a0?adj_t=8ogcewh_z9yhix5" target="_blank" rel="noopener noreferrer">REALITYで鴉夜さよに会う ↗</a><a class="button" href="#works">作品を見てみる ↓</a></div></div><div class="art hero-emblem" aria-label="黒猫と青い目の黒い鴉が囲むSayo"><div class="orbit"><div class="monogram">Sayo</div></div><img class="hero-cat" src="assets/black-cat.png" alt="さよねこ" width="180" height="180"><img class="hero-raven" src="assets/blue-eyed-raven.png" alt="さよがらす（青い目の黒い鴉）" width="180" height="180"><span class="star star-top" aria-hidden="true">✧</span><span class="star star-bottom" aria-hidden="true">✧</span><span class="caption">LIVE &amp; CREATE</span></div></div><section aria-labelledby="entrance"><div class="eyebrow">FIND YOUR WAY</div><h2 id="entrance">今日は、どちらのさよに？</h2><div class="two"><article class="card" id="live"><span class="tag">V LIVER</span><h3>鴉夜さよ<span class="name-reading">からすや さよ / Karasuya Sayo</span></h3>
 <p class="profile-intro">ようこそ、私の巣へ。<br>まったりした空気、ときどきうっかり。</p>
 <p>321所属のVライバー。コメントにお返事しながら、日常のことや、くだらないことをぽつぽつ。あちこち脱線する雑談を中心に、歌やゲームも楽しんでいます。</p>
 <dl class="live-facts">
@@ -64,8 +94,47 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
 <ul class="creative-list"><li><strong>ハンドメイドアクセサリー</strong>ピアスやヘアピン。透明感のある色と、箔やラメのきらめきを楽しめる作品を中心に。</li><li><strong>デスクトップアプリ</strong>鯉が泳ぐ「こいの庭」など、作業の合間に眺めて楽しめるソフトウェアを制作。</li><li><strong>好きなことから、いろいろ</strong>レジン、ワイヤークラフト、刺繍、ミシン、イラスト。ものづくりを楽しんでいます。</li></ul><div class="jump"><a class="button" href="#creator-works">ソフトウェアを見る ↓</a><a class="button" href="#accessories">アクセサリーを見る ↓</a><a class="button" href="#contact">作品のお問い合わせ ↓</a></div></article></div>
 <div class="welcome-note">
 <div><h3>初めましても、聞いているだけも。</h3><p>挨拶ひとつでも、今日あったことでも。話したい日はお喋りして、静かにいたい日は、好きな過ごし方で羽休めしていってください。</p></div>
-<div><h3>配信のお楽しみ</h3><p>「おみスロ」の結果で早口言葉やセリフに挑戦する常設企画も。メンバーシップ「鴉夜組」は、<a href="https://reality.app/r/membership/c2cb73a0" target="_blank" rel="noopener noreferrer">REALITYの案内</a>をご覧ください。</p></div>
-</div></section><section id="works" aria-labelledby="worktitle"><div class="eyebrow">WORKS & SHOP</div><h2 id="worktitle">さよのつくったもの</h2><p>ソフトウェアも、ハンドメイドアクセサリーも。<br>探しているものから、作品とショップへ進めます。</p><div class="jump"><a class="button" href="#accessories">ハンドメイドアクセサリー ↓</a><a class="button" href="#creator-works">ソフトウェア ↓</a></div><h3 id="accessories" class="other-shops-title" style="margin-top:32px;scroll-margin-top:95px">ハンドメイドアクセサリー</h3><p>宵の青、森の緑、あたたかな琥珀色。<br>レジンに光を閉じ込めたピアスやヘアピンを、一つひとつ制作しています。</p><article class="card main-shop"><img class="mascot" src="assets/black-cat.png" alt="ハンドメイドアクセサリーの黒猫" width="220" height="220" loading="lazy"><div class="shop-copy"><span class="tag">MAIN SHOP</span><h3>さよのメインショップ</h3><p>ピアスやヘアピンを探すなら、まずはこちらへ。<br>作品の詳細や販売状況はショップでご案内しています。</p></div><div><a class="button primary" href="https://shirotadu.handcrafted.jp/" target="_blank" rel="noopener noreferrer">メインショップで作品を見る ↗</a><p class="quiet">別のタブでショップが開きます。</p></div></article>
+<div><h3>配信のお楽しみ</h3><p><a href="#omislo">「おみスロ」をここで遊べます。</a>結果に合わせて、早口言葉やセリフに挑戦。メンバーシップ「鴉夜組」は、<a href="https://reality.app/r/membership/c2cb73a0" target="_blank" rel="noopener noreferrer">REALITYの案内</a>をご覧ください。</p></div>
+</div></section>
+<section id="omislo" class="om-section" aria-labelledby="omislo-title">
+  <div class="om-layout">
+    <div class="om-intro">
+      <div class="eyebrow">PLAY IN THE NEST</div>
+      <h2 id="omislo-title">さよの、おみスロ。</h2>
+      <p>ころころ変わる3つの絵柄。<br>何が出るかは、回してからのお楽しみ。</p>
+      <p>配信の常設企画を、ここでも気軽に。<br>出た結果のお題で、いっしょに遊んでみませんか。</p>
+      <dl class="om-rules">
+        <div><dt>大吉・大凶</dt><dd>早口言葉を1つ。</dd></div>
+        <div><dt>3つそろったら</dt><dd>早口言葉3つ、またはセリフを選べます。</dd></div>
+        <div><dt>羽休め吉</dt><dd>ひと息ついて、のんびりと。</dd></div>
+      </dl>
+      <p class="om-reference">参考：<a href="https://gzzio1989.github.io/karasuya-sayo-site/#omislo" target="_blank" rel="noopener noreferrer">鴉夜さよまとめサイトのおみスロ ↗</a></p>
+    </div>
+    <div class="om-machine" id="om-machine" data-state="ready">
+      <div class="om-machine-top"><h3>今日のひと回し</h3><span class="tag">WEBのおみスロ</span></div>
+      <div class="om-reels" id="om-reels" role="img" aria-label="3つの絵柄：鴉、巣、夜景">
+        <div class="om-reel" aria-hidden="true"><span>🐦‍⬛</span></div>
+        <div class="om-reel" aria-hidden="true"><span>🪺</span></div>
+        <div class="om-reel" aria-hidden="true"><span>🌃</span></div>
+      </div>
+      <div class="om-outcome" id="om-result" role="status" aria-live="polite" aria-atomic="true">
+        <h4 id="om-result-title">さて、何が出るでしょう。</h4>
+        <p id="om-result-note">ボタンを押すと、絵柄とお題が決まります。</p>
+        <ol id="om-prompts" class="om-prompts" hidden></ol>
+      </div>
+      <div class="om-choices" id="om-choices" role="group" aria-label="ゾロ目のお題を選ぶ" hidden>
+        <button type="button" id="om-twisters" aria-pressed="true" aria-controls="om-result">早口言葉3つ</button>
+        <button type="button" id="om-line" aria-pressed="false" aria-controls="om-result">セリフ</button>
+      </div>
+      <button type="button" id="om-change" class="om-change" aria-controls="om-result" hidden>別のお題にする</button>
+      <button type="button" id="om-spin" class="button primary om-spin" aria-controls="om-result" disabled>おみスロを回す</button>
+      <p class="quiet">何度でも遊べます。サイト内で楽しむおみスロです。</p>
+      <noscript><p>おみスロを遊ぶには、ブラウザーのJavaScriptを有効にしてください。</p></noscript>
+    </div>
+  </div>
+</section>
+
+<section id="works" aria-labelledby="worktitle"><div class="eyebrow">WORKS & SHOP</div><h2 id="worktitle">さよのつくったもの</h2><p>ソフトウェアも、ハンドメイドアクセサリーも。<br>探しているものから、作品とショップへ進めます。</p><div class="jump"><a class="button" href="#accessories">ハンドメイドアクセサリー ↓</a><a class="button" href="#creator-works">ソフトウェア ↓</a></div><h3 id="accessories" class="other-shops-title" style="margin-top:32px;scroll-margin-top:95px">ハンドメイドアクセサリー</h3><p>宵の青、森の緑、あたたかな琥珀色。<br>レジンに光を閉じ込めたピアスやヘアピンを、一つひとつ制作しています。</p><article class="card main-shop"><img class="mascot" src="assets/black-cat.png" alt="ハンドメイドアクセサリーの黒猫" width="220" height="220" loading="lazy"><div class="shop-copy"><span class="tag">MAIN SHOP</span><h3>さよのメインショップ</h3><p>ピアスやヘアピンを探すなら、まずはこちらへ。<br>作品の詳細や販売状況はショップでご案内しています。</p></div><div><a class="button primary" href="https://shirotadu.handcrafted.jp/" target="_blank" rel="noopener noreferrer">メインショップで作品を見る ↗</a><p class="quiet">別のタブでショップが開きます。</p></div></article>
 <div class="product-grid" aria-label="ハンドメイド作品のピックアップ">
 <article class="product">
 <a class="product-photo" href="https://shirotadu.handcrafted.jp/items/130441121" target="_blank" rel="noopener noreferrer"><img src="https://baseec-img-mng.akamaized.net/images/item/origin/d081d81aafe3d18769d422e170ecaf1a.jpg?im=Resize%2Cwidth%3D1280%2Ctype%3Dnormal&amp;imformat=generic&amp;q=90" alt="宵の青の長方形スタッドピアスの作品写真" width="800" height="800" loading="lazy" decoding="async"></a>
@@ -116,4 +185,194 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
 <a class="contact-link" href="https://thebase.com/inquiry/shirotadu-handcrafted-jp" target="_blank" rel="noopener noreferrer"><strong>ハンドメイド作品について ↗</strong><span>メインショップのお問い合わせフォームへ</span></a>
 <a class="contact-link" href="https://sayo-shirotadu.booth.pm/" target="_blank" rel="noopener noreferrer"><strong>「こいの庭」など、ソフトウェアについて ↗</strong><span>BOOTHのショップへ。ショップのメッセージからご連絡ください。</span></a>
 <a class="contact-link" href="https://x.com/SayoKarasuya" target="_blank" rel="noopener noreferrer"><strong>配信のお知らせを見る ↗</strong><span>鴉夜さよのX · @SayoKarasuya</span></a>
-</div></section></main><footer><span>© さよ</span><span class="draft">鴉夜さよ / しろたづさよ · 更新案 2026.10.19</span></footer></body></html>
+</div></section></main><footer><span>© さよ</span><span class="draft">鴉夜さよ / しろたづさよ · 更新案 2026.10.19</span></footer><script id="omislo-script">
+
+(() => {
+  'use strict';
+  const symbols = [
+    { icon: '🐦‍⬛', name: '鴉' }, { icon: '🪺', name: '巣' },
+    { icon: '🌃', name: '夜景' }, { icon: '🍙', name: 'おにぎり' },
+    { icon: '🥑', name: 'アボカド' }, { icon: '7️⃣', name: '7' },
+    { icon: '🐓', name: 'にわとり' }
+  ];
+  const twisters = [
+    '生麦、生米、生卵。',
+    '赤巻紙、青巻紙、黄巻紙。',
+    '蛙ぴょこぴょこ三ぴょこぴょこ、合わせてぴょこぴょこ六ぴょこぴょこ。',
+    '隣の客は、よく柿食う客だ。',
+    'この竹垣に竹立てかけたのは、竹立てかけたかったから竹立てかけた。',
+    '赤パジャマ、青パジャマ、黄パジャマ。',
+    '東京特許許可局。',
+    '新人歌手、新春シャンソンショー。',
+    '坊主が屏風に上手に坊主の絵を描いた。',
+    'スモモも桃も桃のうち、桃もスモモも桃のうち。',
+    '庭には二羽、鶏がいる。',
+    '瓜売りが瓜売りに来て、瓜売り残し売り売り帰る、瓜売りの声。',
+    '除雪車、除雪作業中。',
+    '肩たたき機。',
+    'バス、ガス爆発。'
+  ];
+  const lines = [
+    'ようこそ。今日のぶんの羽休め、していきませんか。',
+    'うまく言えなかったところも含めて、今日の私です。',
+    '静かな時間のおともに、お茶を一杯。何を飲みますか。',
+    '今のは噛んだんじゃありません。言葉が寄り道したんです。',
+    'おかえりなさい。今日はどんな一日でしたか。',
+    'まだ少し、話していたいですね。次はあなたの番です。',
+    'おにぎりは逃げません。落ち着いて、具から選びましょう。',
+    'それでは、明日の私に続きを託します。おやすみなさい。'
+  ];
+  const choose = (list, random = Math.random) => list[Math.floor(random() * list.length)];
+  function drawOutcome(random = Math.random) {
+    const roll = random();
+    if (roll < .25) {
+      const symbol = choose(symbols, random);
+      return { kind: 'triple', reels: [symbol, symbol, symbol] };
+    }
+    if (roll >= .65) return { kind: 'rest', reels: symbols.slice(0, 3) };
+    const a = choose(symbols, random);
+    const b = choose(symbols, random);
+    const c = choose(symbols.filter(symbol => symbol !== b), random);
+    return { kind: roll < .45 ? 'good' : 'bad', reels: [a, b, c] };
+  }
+  function drawPrompts(pool, count, previous = [], random = Math.random) {
+    let available = pool.filter(text => !previous.includes(text));
+    if (available.length < count) available = pool.slice();
+    const picked = [];
+    for (let i = 0; i < count; i++) {
+      const index = Math.floor(random() * available.length);
+      picked.push(available.splice(index, 1)[0]);
+    }
+    return picked;
+  }
+
+  const root = document.getElementById('om-machine');
+  if (!root) return;
+  const spin = document.getElementById('om-spin');
+  const reelGroup = document.getElementById('om-reels');
+  const reels = Array.from(root.querySelectorAll('.om-reel'));
+  const result = document.getElementById('om-result');
+  const title = document.getElementById('om-result-title');
+  const note = document.getElementById('om-result-note');
+  const prompts = document.getElementById('om-prompts');
+  const choices = document.getElementById('om-choices');
+  const twisterButton = document.getElementById('om-twisters');
+  const lineButton = document.getElementById('om-line');
+  const change = document.getElementById('om-change');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let spinning = false;
+  let outcome = null;
+  let mode = 'twisters';
+  let currentPrompts = [];
+  let frameId = null;
+  let lastTick = 0;
+
+  function showPrompts(avoidPrevious = false) {
+    const pool = mode === 'line' ? lines : twisters;
+    const count = mode === 'line' || outcome.kind !== 'triple' ? 1 : 3;
+    currentPrompts = drawPrompts(pool, count, avoidPrevious ? currentPrompts : []);
+    prompts.replaceChildren();
+    currentPrompts.forEach(text => {
+      const item = document.createElement('li');
+      item.textContent = text;
+      prompts.appendChild(item);
+    });
+    prompts.hidden = false;
+    result.classList.toggle('om-quote', mode === 'line');
+    note.textContent = mode === 'line' ? '声に出して、ひとことどうぞ。' :
+      count === 3 ? '3つ、続けて言えるでしょうか。' : 'ひとつ、声に出して挑戦してみてください。';
+    twisterButton.setAttribute('aria-pressed', String(mode === 'twisters'));
+    lineButton.setAttribute('aria-pressed', String(mode === 'line'));
+  }
+
+  function finishSpin() {
+    if (!spinning) return;
+    if (frameId !== null) cancelAnimationFrame(frameId);
+    frameId = null;
+    reels.forEach((reel, index) => {
+      reel.firstElementChild.textContent = outcome.reels[index].icon;
+      reel.classList.remove('om-turning');
+      reel.classList.add('om-settled');
+    });
+    reelGroup.setAttribute('aria-label', '今回の絵柄：' + outcome.reels.map(symbol => symbol.name).join('、'));
+    root.dataset.state = outcome.kind;
+    result.dataset.kind = outcome.kind;
+    const titles = { triple: '3つそろいました！', good: '大吉', bad: '大凶', rest: '羽休め吉' };
+    title.textContent = titles[outcome.kind];
+    choices.hidden = outcome.kind !== 'triple';
+    change.hidden = outcome.kind === 'rest';
+    mode = 'twisters';
+    if (outcome.kind === 'rest') {
+      note.textContent = '肩の力を抜いて、ひと息。今日はのんびり羽休めしていってください。';
+      prompts.hidden = true;
+    } else {
+      showPrompts();
+    }
+    result.setAttribute('aria-busy', 'false');
+    spin.textContent = 'もう一度回す';
+    spin.disabled = false;
+    spinning = false;
+  }
+
+  function animate(now) {
+    if (!spinning) return;
+    const elapsed = now - lastTick;
+    if (elapsed > 75) {
+      reels.forEach(reel => {
+        if (reel.classList.contains('om-turning')) reel.firstElementChild.textContent = choose(symbols).icon;
+      });
+      lastTick = now;
+    }
+    frameId = requestAnimationFrame(animate);
+  }
+
+  spin.addEventListener('click', () => {
+    if (spinning) return;
+    spinning = true;
+    spin.disabled = true;
+    spin.textContent = '回転中…';
+    root.dataset.state = 'spinning';
+    result.dataset.kind = '';
+    result.classList.remove('om-quote');
+    title.textContent = 'ころころ、回転中…';
+    note.textContent = '絵柄が止まるまで、少しお待ちください。';
+    prompts.hidden = true;
+    prompts.replaceChildren();
+    choices.hidden = true;
+    change.hidden = true;
+    result.setAttribute('aria-busy', 'true');
+    reelGroup.setAttribute('aria-label', '3つの絵柄が回転中');
+    outcome = drawOutcome();
+    reels.forEach(reel => reel.classList.remove('om-settled', 'om-turning'));
+    if (reducedMotion.matches) {
+      window.setTimeout(finishSpin, 120);
+      return;
+    }
+    reels.forEach(reel => reel.classList.add('om-turning'));
+    lastTick = 0;
+    frameId = requestAnimationFrame(animate);
+    reels.forEach((reel, index) => {
+      window.setTimeout(() => {
+        reel.firstElementChild.textContent = outcome.reels[index].icon;
+        reel.classList.remove('om-turning');
+        reel.classList.add('om-settled');
+        if (index === reels.length - 1) finishSpin();
+      }, 850 + index * 350);
+    });
+  });
+
+  function setMode(nextMode) {
+    if (spinning || !outcome || outcome.kind !== 'triple' || mode === nextMode) return;
+    mode = nextMode;
+    showPrompts();
+  }
+  twisterButton.addEventListener('click', () => setMode('twisters'));
+  lineButton.addEventListener('click', () => setMode('line'));
+  change.addEventListener('click', () => {
+    if (!spinning && outcome && outcome.kind !== 'rest') showPrompts(true);
+  });
+  spin.disabled = false;
+})();
+
+</script>
+</body></html>
