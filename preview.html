@@ -78,6 +78,17 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
 @media(max-width:480px){.om-machine{padding:20px}.om-intro h2{font-size:30px}.om-reels{gap:8px;padding:12px}.om-reel{height:79px;font-size:36px}.om-rules>div{grid-template-columns:7em 1fr;gap:8px}.om-machine-top h3{font-size:16px}.om-outcome h4{font-size:23px}nav{flex-wrap:wrap;justify-content:flex-end;gap:8px 12px}.nav{gap:8px}.om-outcome ol{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.om-reel.om-turning span,.om-reel.om-settled span{animation:none}}
 
+
+/* Keep the frame and spin control steady across all outcomes. */
+.om-outcome{height:18rem;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;overflow-wrap:anywhere}
+.om-outcome:focus-visible{outline:2px solid var(--purple);outline-offset:5px}
+.om-choices{min-height:38px}
+.om-choices[hidden]{display:flex;visibility:hidden;pointer-events:none}
+.om-change{display:block}
+.om-change[hidden]{display:block;visibility:hidden;pointer-events:none}
+.om-spin{height:54px;min-height:54px}
+@media(max-width:480px){.om-outcome{height:22rem}}
+
 </style></head><body>
 <a class="skip-link" href="#home">本文へ移動</a>
 <aside class="preview-notice" aria-label="テストページのご案内"><strong>更新案のテストページ</strong>2026.10.19 · 内容・見た目の確認用です。<a href="./">現在の公開ページを見る ↗</a></aside><header><div class="nav"><a class="brand" href="#home">さよ<span aria-hidden="true">.</span><small>LIVE & CREATE</small></a><nav aria-label="メインメニュー"><a href="#live">配信</a><a href="#omislo">おみスロ</a><a href="#works">作品</a><a href="#about">さよについて</a><a href="#contact">お問い合わせ</a></nav></div></header><main id="home"><div class="hero"><div><div class="eyebrow">SAYO / LIVE & CREATE</div><h1>お話する、作る。<br>どちらも、<em>さよ</em>。</h1><p class="lead">Vライバー「鴉夜さよ」と、<br>クリエイター「しろたづさよ」。<br>配信に会いに来たあなたも、作品を探しているあなたも。<br>ここから、気になるほうへどうぞ。</p><div class="jump"><a class="button primary" href="https://reality.app/profile/c2cb73a0?adj_t=8ogcewh_z9yhix5" target="_blank" rel="noopener noreferrer">REALITYで鴉夜さよに会う ↗</a><a class="button" href="#works">作品を見てみる ↓</a></div></div><div class="art hero-emblem" aria-label="黒猫と青い目の黒い鴉が囲むSayo"><div class="orbit"><div class="monogram">Sayo</div></div><img class="hero-cat" src="assets/black-cat.png" alt="さよねこ" width="180" height="180"><img class="hero-raven" src="assets/blue-eyed-raven.png" alt="さよがらす（青い目の黒い鴉）" width="180" height="180"><span class="star star-top" aria-hidden="true">✧</span><span class="star star-bottom" aria-hidden="true">✧</span><span class="caption">LIVE &amp; CREATE</span></div></div><section aria-labelledby="entrance"><div class="eyebrow">FIND YOUR WAY</div><h2 id="entrance">今日は、どちらのさよに？</h2><div class="two"><article class="card" id="live"><span class="tag">V LIVER</span><h3>鴉夜さよ<span class="name-reading">からすや さよ / Karasuya Sayo</span></h3>
@@ -117,7 +128,7 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
         <div class="om-reel" aria-hidden="true"><span>🪺</span></div>
         <div class="om-reel" aria-hidden="true"><span>🌃</span></div>
       </div>
-      <div class="om-outcome" id="om-result" role="status" aria-live="polite" aria-atomic="true">
+      <div class="om-outcome" id="om-result" tabindex="0" aria-label="おみスロの結果とお題" role="status" aria-live="polite" aria-atomic="true">
         <h4 id="om-result-title">さて、何が出るでしょう。</h4>
         <p id="om-result-note">ボタンを押すと、絵柄とお題が決まります。</p>
         <ol id="om-prompts" class="om-prompts" hidden></ol>
@@ -278,6 +289,7 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
       prompts.appendChild(item);
     });
     prompts.hidden = false;
+    result.scrollTop = 0;
     result.classList.toggle('om-quote', mode === 'line');
     note.textContent = mode === 'line' ? '声に出して、ひとことどうぞ。' :
       count === 3 ? '3つ、続けて言えるでしょうか。' : 'ひとつ、声に出して挑戦してみてください。';
@@ -308,6 +320,7 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
     } else {
       showPrompts();
     }
+    result.scrollTop = 0;
     result.setAttribute('aria-busy', 'false');
     spin.textContent = 'もう一度回す';
     spin.disabled = false;
@@ -338,6 +351,7 @@ footer{gap:16px;flex-wrap:wrap}.profile-links{margin-top:22px}.card .jump{margin
     note.textContent = '絵柄が止まるまで、少しお待ちください。';
     prompts.hidden = true;
     prompts.replaceChildren();
+    result.scrollTop = 0;
     choices.hidden = true;
     change.hidden = true;
     result.setAttribute('aria-busy', 'true');
