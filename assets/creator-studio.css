@@ -39,3 +39,11 @@ a:focus-visible,button:focus-visible{outline-color:#734789}
 .book-entry .text-link{text-decoration:underline}.book-shelf .book-format{font-size:12px;color:var(--muted);margin-top:12px}
 @media(max-width:800px){.book-grid{grid-template-columns:1fr}.book-entry{grid-template-columns:88px minmax(0,1fr)}}
 @media(max-width:360px){.book-entry{grid-template-columns:67px minmax(0,1fr);gap:10px;padding:12px}}
+/* Keep names, labels and short descriptions readable as the columns change width. */
+#books-title [lang="ja"],.reading-unit{display:inline-block;max-width:100%}
+main :where(h1,h2,h3,h4,p,li,dd,.button,.text-link,.contact-link strong){text-wrap:pretty}
+main :where(h1,h2,h3,h4,.button,.text-link,.works-intro,.works-caption,.profile-intro,.work-subtitle,.product p,.book-entry p,.quiet,.om-rules dd,.contact p,.welcome-note p){text-wrap:balance}
+html:lang(ja) main :where(h1,h2,h3,h4,p,li,dt,dd,.button,.text-link,.contact-link strong){word-break:auto-phrase}
+html:lang(ja) .live-facts>div{grid-template-columns:6.5em minmax(0,1fr)}
+html:lang(en) .work-specs>div{grid-template-columns:6em minmax(0,1fr)}
+@media(max-width:480px){.shop-entry .button,.work-details .button{padding-inline:12px}}
