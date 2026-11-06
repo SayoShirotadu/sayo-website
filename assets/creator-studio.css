@@ -1,0 +1,41 @@
+/* Sayo's studio: ivory paper, brass details and plum ink. */
+:root{color-scheme:light;--paper:#fffdf9;--ink:#382e3e;--line:#ddcfae;--pink:#65416f;--purple:#5c3c70;--muted:#635768;--gold:#88651e;--lavender:#f4eff7}
+body{background:radial-gradient(ellipse 75% 28rem at 95% 8rem,#f3e5c4a6,transparent 75%),radial-gradient(ellipse 65% 25rem at 0 10rem,#eae0f1a6,transparent 74%),var(--paper);color:var(--ink)}
+header{background:#fffdf9f5;border-bottom:1px solid #c5a667;box-shadow:0 3px 18px #70592a0a}
+.brand,nav a,h1,h2,h3,h4{color:#46314e}.brand-icon{border:1px solid #aa8742}
+nav a:hover,.text-link:hover{color:#775819;text-decoration:underline;text-underline-offset:4px}
+.hero{border-bottom:1px solid #c5a667}.hero h1 em{color:#52385f;font-style:normal}
+.hero .eyebrow,.eyebrow{color:var(--gold)}.hero .eyebrow::before{content:"";display:inline-block;vertical-align:middle;width:32px;height:2px;margin-right:10px;background:#ba9850}
+.hero-portrait{border:2px solid #c4a363;box-shadow:0 0 0 5px #fffcf5,0 12px 32px #674b4b1c}
+.card,.about,#works .product{background:#fff;border-color:var(--line);box-shadow:0 6px 22px #5f46310a}
+.card::before{background:#9678a4}.card.creator::before{background:linear-gradient(90deg,#b18d42,#dfc98f,#b49cba)}
+.tag,.creator .tag{background:#f5e9c9;color:#684d1c}.card#live,.welcome-note{background:var(--lavender)}
+.card#live .tag{background:#e7dceb;color:#533b61}
+.software-work{background:linear-gradient(120deg,#fff 65%,#fbf6e9)}.work-details{background:#f9f4e8}.software-image{background:#f2eadd}
+.software-work .work-subtitle,.profile-intro,.creative-list strong,.om-rules dt{color:var(--purple)}
+.quiet,.draft,.gallery-note,.works-example-label,.work-specs dt,.name-reading,.live-facts dt,.contact-link span{color:var(--muted)}
+.works-intro,.works-caption,.product p,.shop-entry p,.welcome-note p{color:#55495b}
+.product-photo{background:#f4eee4}#works .product .text-link,.text-link{color:var(--purple)}
+.shop-entry{background:linear-gradient(110deg,#f4e6c0,#fffcf5 65%,#f0e8f4);border-color:#bda16b}
+.shop-entry img{border:1px solid #c9b381}.contact-link{background:#fff;border-color:var(--line)}.contact-link strong{color:#543b62}.contact-link:hover{background:#f8efd9}
+.button,button{background:#fffdf9;border-color:#bba673;color:#533d5c}
+.button:hover,button:hover{background:#f6edda;color:#372740}
+.button.primary{background:#ead39b;border-color:#aa8640;color:#3c2c30}.button.primary:hover{background:#dfc184;color:#332535}
+button[aria-pressed=true]{background:#61456d;color:#fff}.skip-link{background:#50365f;color:white}
+a:focus-visible,button:focus-visible{outline-color:#734789}
+.language-switch span,.language-switch a{color:#605066}.language-switch a[aria-current=page]{background:#61456d;color:#fff}
+.language-switch a:hover{background:#f4e5c0;color:#3d2a41}.language-switch a[aria-current=page]:hover{background:#50365f;color:#fff}
+.om-machine{background:linear-gradient(145deg,#4a3256,#32243c);border-color:#ba9a5d;color:#fffcf6;box-shadow:0 9px 26px #5c43351a}
+.om-machine h3,.om-machine .quiet{color:#faf3e8}.om-machine .tag{background:#efdfb7;color:#4c3919}
+.om-reels{background:#302437;border-color:#9e835c}.om-reel{border-color:#aa8d65}
+.om-machine .om-change,.om-machine .om-change:hover{background:transparent;color:#f7dda2}
+.om-machine a:focus-visible,.om-machine button:focus-visible,.om-outcome:focus-visible{outline-color:#f6d288}
+.book-shelf{border-top:1px solid var(--line);padding:25px 0 8px;margin:0 0 32px;scroll-margin-top:100px}
+.book-shelf h3{margin:6px 0}.book-shelf>p{max-width:53em;margin:5px 0 18px;font-size:14px;color:#55495b}
+.book-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.book-entry{display:grid;grid-template-columns:clamp(80px,9vw,118px) minmax(0,1fr);gap:17px;align-items:center;padding:15px;background:white;border:1px solid var(--line);border-radius:16px;color:var(--ink);text-decoration:none}
+.book-entry:hover{background:#fcf8ee;border-color:#af8d49}.book-entry img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:contain;background:#faf7f1;border-radius:5px}
+.book-entry h4{margin:0;font-size:17px;line-height:1.5}.book-entry p{margin:6px 0 8px;font-size:13px;line-height:1.7;color:#55495b}
+.book-entry .text-link{text-decoration:underline}.book-shelf .book-format{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:800px){.book-grid{grid-template-columns:1fr}.book-entry{grid-template-columns:88px minmax(0,1fr)}}
+@media(max-width:360px){.book-entry{grid-template-columns:67px minmax(0,1fr);gap:10px;padding:12px}}
