@@ -1126,6 +1126,43 @@ function predicate(word,id,form){
   return word;
 }
 const deRoles=[["Anfängerin","Anfänger"],["Streamerin","Streamer"],["Lehrerin","Lehrer"],["Studentin","Student"],["Spielerin","Spieler"],["Japanerin","Japaner"]];
+const occupations={
+  es:[["actriz","actor"],["profesora","profesor"],["alumna","alumno"],["cantante","cantante"],["streamer","streamer"]],
+  fr:[["actrice","acteur"],["chanteuse","chanteur"],["streameuse","streameur"],["étudiante","étudiant"],["débutante","débutant"],["professeure","professeur"]],
+  it:[["attrice","attore"],["cantante","cantante"],["studentessa","studente"],["giocatrice","giocatore"],["streamer","streamer"]],
+  pt:[["atriz","ator"],["professora","professor"],["aluna","aluno"],["jogadora","jogador"],["cantora","cantor"],["streamer","streamer"]],
+  ru:[["актриса","актёр"],["певица","певец"],["студентка","студент"],["японка","японец"]],
+  de:[...deRoles,["Schauspielerin","Schauspieler"],["Sängerin","Sänger"],["Sprecherin","Sprecher"]],
+  en:[["actress","actor"]]
+};
+const rolePrefixes={
+  es:/(?<!\p{L})((?:yo\s+)?soy\s+)(?:(un|una)\s+)?(\p{L}+)(?!\p{L})/giu,
+  fr:/(?<!\p{L})(je\s+suis\s+)(?:(un|une)\s+)?(\p{L}+)(?!\p{L})/giu,
+  it:/(?<!\p{L})(sono\s+)(?:(un['’]|(?:una|uno|un)(?=\s))\s*)?(\p{L}+)(?!\p{L})/giu,
+  pt:/(?<!\p{L})((?:eu\s+)?sou\s+)(?:(um|uma)\s+)?(\p{L}+)(?!\p{L})/giu,
+  de:/(?<!\p{L})(ich\s+bin\s+)(?:(ein|eine)\s+)?(\p{L}+)(?!\p{L})/giu,
+  ru:/(?<!\p{L})(я\s+(?:[—–-]\s*)?)()(\p{L}+)(?!\p{L})/giu,
+  en:/(?<!\p{L})(I(?:\s+am|['’]m)\s+)(?:(a|an)\s+)?(\p{L}+)(?!\p{L})/giu
+};
+function inflectOccupation(text,id,form){
+  const pattern=rolePrefixes[id];
+  if(!pattern)return text;
+  return text.replace(pattern,(all,prefix,article,word)=>{
+    const pair=occupations[id].find(p=>p.some(o=>o.toLowerCase()===word.toLowerCase().replace("актер","актёр")));
+    if(!pair)return all;
+    const role=formValue(pair,form),female=form==="female";
+    let before="";
+    if(article){
+      if(id==="it"){
+        before=female?(/^[aeiou]/iu.test(role)?"un’":"una "):/^(?:s[^aeiou]|z|gn|ps)/iu.test(role)?"uno ":"un ";
+      }else{
+        const articles={es:["una","un"],fr:["une","un"],pt:["uma","um"],de:["eine","ein"],en:["an","an"]};
+        before=formValue(articles[id],form)+" ";
+      }
+    }
+    return prefix+before+(id==="de"?role:copyCase(role,word));
+  });
+}
 function thaiText(text,source,form){
   const male=form==="male";
   const result=text.replace(/(?:ค่ะ|คะ|ครับ)(?=[\s.!?…,。！？ฯ”’'"»)]|$)/gu,(particle,offset)=>{
@@ -1149,12 +1186,7 @@ function speakerText(text,id,source,form="female"){
     result=result.replace(/^(enchantée?|désolée?)(?!\p{L})/iu,w=>predicate(w,id,form));
   }
   if(thirdPersonSource.test(source)&&!/(?:私|わたし|僕|ぼく|俺)(?:が|は|も)/u.test(source))return result;
-  if(id==="de"){
-    return result.replace(/(?<!\p{L})(ich\s+bin\s+)(?:(ein|eine)\s+)?(\p{L}+)(?!\p{L})/giu,(all,prefix,article,word)=>{
-      const pair=deRoles.find(p=>p.some(v=>v.toLowerCase()===word.toLowerCase()));
-      return pair?prefix+(article?(form==="male"?"ein ":"eine "):"")+formValue(pair,form):all;
-    });
-  }
+  result=inflectOccupation(result,id,form);
   const pattern=selfPredicates[id];
   return pattern?result.replace(pattern,(_,prefix,word)=>prefix+predicate(word,id,form)):result;
 }
@@ -1177,12 +1209,22 @@ const novicePhrases={
   pt:"Sou~ソウ~私は～です|iniciante~イニスィアンチ~初心者",
   ru:"Я~ヤー~私は|новичок~ナヴィチョーク~初心者"
 };
+const actorPhrases={
+  en:"I'm~アイム~私は～です|an~アン~ひとりの|actress/actor~アクトレス/アクター~俳優",
+  es:"Soy~ソイ~私は～です|actriz/actor~アクトリス/アクトール~俳優",
+  fr:"Je~ジュ~私は|suis~スュイ~～です|actrice/acteur~アクトリス/アクトゥール~俳優",
+  pt:"Sou~ソウ~私は～です|atriz/ator~アトリス/アトール~俳優",
+  de:"Ich~イヒ~私は|bin~ビン~～です|Schauspielerin/Schauspieler~シャウシュピーラリン/シャウシュピーラー~俳優",
+  ru:"Я~ヤー~私は|актриса/актёр~アクトリーサ/アクチョール~俳優"
+};
 function speakerPhrase(source,id,form="female"){
   if(/[?？]/u.test(source))return;
   const body=source.normalize("NFKC").replace(/[。、!！\s]/gu,"").replace(/^(?:私は|わたしは|僕は|ぼくは|俺は)/u,"");
   const tired=/^(?:疲れた|つかれた|疲れました|つかれました|疲れています|つかれています|疲れたよ)$/u.test(body);
   const novice=/^(?:初心者|しょしんしゃ)(?:です|だよ|なんです)?$/u.test(body);
-  const template=tired?tiredPhrases[id]:novice?novicePhrases[id]:null;
+  const actor=/^(?:俳優|役者)(?:です|だよ|なんです)?$/u.test(body);
+  const occupation=id==="it"?(form==="male"?"Sono~ソーノ~私は～です|un~ウン~ひとりの|attore~アットーレ~俳優":"Sono~ソーノ~私は～です|un’attrice~ウナットリーチェ~ひとりの俳優"):actorPhrases[id];
+  const template=tired?tiredPhrases[id]:novice?novicePhrases[id]:actor?occupation:null;
   if(!template)return;
   const choose=value=>value.includes("/")?formValue(value.split("/"),form):value;
   const row=template.split("|").map(part=>{
@@ -1190,7 +1232,7 @@ function speakerPhrase(source,id,form="female"){
     return {word:choose(word),reading:choose(kana),meaning};
   });
   if(id!=="th")row.at(-1).word+=".";
-  return {text:row.map(t=>t.word).join(id==="th"?"":" "),lines:[row],literal:row.map(t=>t.meaning).join(" ／ "),whole:tired?"私は疲れています。":"私は初心者です。"};
+  return {text:row.map(t=>t.word).join(id==="th"?"":" "),lines:[row],literal:row.map(t=>t.meaning).join(" ／ "),whole:tired?"私は疲れています。":novice?"私は初心者です。":"私は俳優です。"};
 }
 
 function adaptPresetSpeaker(result,id,source,form){
@@ -1655,10 +1697,10 @@ async function cloudReview(input,client,signal){
 function setupReview({el,getInput,profile,copyText}){
   const panel=el("review-panel"),status=el("review-status"),actions=el("review-actions"),answer=el("review-answer");
   const open=el("review-open"),again=el("review-again"),runCloud=el("review-cloud"),login=el("review-login");
-  let task,epoch=0,view=null,stage="",memo=new Map();
+  let task,epoch=0,view=null,stage="",usingCloud=false,memo=new Map();
   const snapshotKey=v=>JSON.stringify([v.source,v.id,v.target,v.form]);
   function reset(enabled=false){
-    epoch++;task?.abort();task=null;view=null;stage="";panel.hidden=true;open.disabled=!enabled;
+    epoch++;task?.abort();task=null;view=null;stage="";usingCloud=false;panel.hidden=true;open.disabled=!enabled;
     open.setAttribute("aria-expanded","false");answer.hidden=true;actions.hidden=true;again.hidden=true;
     el("review-cancel").hidden=true;status.textContent="";
   }
@@ -1668,10 +1710,10 @@ function setupReview({el,getInput,profile,copyText}){
     el("review-provider-note").textContent=cloudOrigin()?"Puter のAIに原文・訳文・話し方を送ります。利用枠や料金はご自身の Puter プランに従います。":"公開ページでクラウドAIを使えます。";
   }
   function alternatives(text){
-    stage="options";status.textContent=text;actions.hidden=false;el("review-cancel").hidden=true;paintCloud();
+    stage="options";usingCloud=false;answer.hidden=true;status.textContent=text;actions.hidden=false;el("review-cancel").hidden=true;paintCloud();
   }
   function show(result,origin){
-    stage="answer";status.textContent=origin;actions.hidden=true;answer.hidden=false;el("review-cancel").hidden=true;
+    stage="answer";usingCloud=origin==="Puter のAIによる精査";status.textContent=origin;actions.hidden=true;answer.hidden=false;el("review-cancel").hidden=true;
     el("review-verdict").textContent=reviewReasons[result.verdict];
     el("review-meaning").textContent=result.meaning;el("review-tone").textContent=result.tone;
     const corrected=el("review-alternative");corrected.textContent=result.alternative;corrected.lang=view.locale;
@@ -1683,7 +1725,7 @@ function setupReview({el,getInput,profile,copyText}){
     const version=++epoch;task?.abort();task=new AbortController();const {signal}=task;
     const timeout=setTimeout(()=>{if(version===epoch)task.abort();},50000);
     const key=snapshotKey(current);
-    stage="running";answer.hidden=true;actions.hidden=true;again.hidden=true;el("review-cancel").hidden=false;
+    stage="running";usingCloud=provider==="cloud";answer.hidden=true;actions.hidden=true;again.hidden=true;el("review-cancel").hidden=false;
     status.textContent=provider==="cloud"?"クラウドAIで原文と訳文を確認中…":"端末内のAIを確認中…";
     try{
       let result;
@@ -1726,16 +1768,25 @@ function setupReview({el,getInput,profile,copyText}){
     const id=epoch,ok=await copyText(copyableReview(view));
     if(id===epoch)status.textContent=ok?"依頼文をコピーしました。お使いのAIに貼り付けてください。":"コピーできませんでした。もう一度お試しください。";
   });
-  return {reset};
+  function changedAccount(){
+    memo.clear();
+    if(usingCloud){epoch++;task?.abort();alternatives("アカウントが変わりました。必要に応じてもう一度精査してください。");}
+    else if(stage==="options")paintCloud();
+  }
+  return {reset,changedAccount};
 }
 
 
 
-function setupProfile({el,read,write,apply}){
+function setupProfile({el,read,write,apply,identityChanged}){
   const dialog=el("profile-dialog"),status=el("profile-status"),select=el("default-form");
   const signIn=el("profile-login"),save=el("profile-save"),signOut=el("profile-logout"),retry=el("profile-retry");
   const guest=()=>validSpeaker(read("guest-default"))?read("guest-default"):"female";
   let client,account=null,operation="",requestId=0,canWrite=false,preference=guest();
+  function setAccount(next){
+    if(account===next)return;
+    account=next;identityChanged();
+  }
   function paint(){
     el("profile-name").textContent=account?"Puter · "+account:"ゲスト";
     el("account-open").textContent=account?"アカウント設定":"ログイン・設定";
@@ -1759,7 +1810,7 @@ function setupProfile({el,read,write,apply}){
       else client=await loadPuter();
       if(id!==requestId)return;
       if(!client.auth.isSignedIn()){
-        account=null;canWrite=false;preference=guest();select.value=preference;
+        setAccount(null);canWrite=false;preference=guest();select.value=preference;
         status.textContent="この端末には"+speakerLabel(preference)+"を設定しています。";
         write("resume-profile","");return;
       }
@@ -1767,7 +1818,7 @@ function setupProfile({el,read,write,apply}){
       if(id!==requestId)return;
       if(!user?.username)throw Error("user");
       const changedAccount=account!==user.username;
-      account=user.username;canWrite=false;write("resume-profile","yes");
+      setAccount(user.username);canWrite=false;write("resume-profile","yes");
       if(changedAccount){preference="female";select.value=preference;}
       const record=await loadPreference(client,user);
       if(id!==requestId||account!==record.username)return;
@@ -1793,7 +1844,7 @@ function setupProfile({el,read,write,apply}){
     operation="logout";paint();
     try{
       await client.auth.signOut();
-      account=null;canWrite=false;preference=guest();select.value=preference;
+      setAccount(null);canWrite=false;preference=guest();select.value=preference;
       write("resume-profile","");apply(preference,true);
       status.textContent="ログアウトしました。この端末の設定を使います。";
     }catch{status.textContent="ログアウトを確認できませんでした。";}
@@ -2035,7 +2086,7 @@ function applyDefault(value,force){
 for(const input of speakerInputs)input.addEventListener("change",()=>{
   if(input.checked){speakerOverride=true;speaker=input.value;run(!!activeResult||automatic.checked);}
 });
-const profile=setupProfile({el:byId,read:readSetting,write:writeSetting,apply:applyDefault});
+const profile=setupProfile({el:byId,read:readSetting,write:writeSetting,apply:applyDefault,identityChanged:()=>review.changedAccount()});
 const review=setupReview({el:byId,copyText:copyValue,profile,getInput:()=>activeResult&&!activeResult.pending?
   {source:source.value.trim(),target:activeResult.text,id:lang.id,language:lang.name,locale:lang.locale,form:speaker}:null});
 paintSpeaker();updateLanguage();run(true);
