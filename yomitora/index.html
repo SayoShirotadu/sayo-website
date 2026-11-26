@@ -1146,13 +1146,51 @@ const japaneseCommonReadings = new Map(Object.entries({
   こんにちは:"コンニチワ",こんばんは:"コンバンワ",は:"ワ",へ:"エ",を:"オ"
 }));
 
+const japaneseParticles=new Map(Object.entries({
+  は:"topic marker",が:"subject marker",を:"object marker",へ:"toward",に:"at / to",
+  の:"of / possessive marker",で:"at / by means of",と:"with / quotation marker",も:"also",
+  から:"from / because",まで:"until / as far as",より:"than / from",や:"and others",
+  か:"question marker",ね:"seeking agreement",よ:"emphasis",です:"polite form of “is”",
+  ます:"polite verb ending",たち:"plural marker"
+}));
+const inflection=/^(?:(?:っ|ん|い|し|き|ぎ|み|び|べ|け|げ|れ|せ|め|ね|え|く)?[てでた](?:(?:い(?:る|た|て|ます|ました|ません(?:でした)?|ない|なかった)|る|た|きた|くる|いく|くださ(?:い|った)|ほしい)(?:んです)?)?|[いきぎしちにびみりべけせてげれめえねらわかさたなばま]{0,2}(?:ます|ました|ません(?:でした)?|ましょう|たい|たかった|ない|なかった|かった|くない|くなかった|れる|られる))$/u;
+const kanaVerbStems=new Map(Object.entries({
+  眠:"ねむ",寝:"ね",飲:"の",読:"よ",書:"か",話:"はな",帰:"かえ",遊:"あそ",住:"す",
+  走:"はし",泳:"およ",歩:"ある",洗:"あら",買:"か",見:"み",待:"ま",思:"おも",勉強:"べんきょう"
+}));
+
+// ICU can split an inflection into several fragments (眠 | って | いる).
+// Retain the complete predicate when the following kana form an actual ending.
+function joinJapaneseInflections(row) {
+  const joined=[];
+  for(let start=0;start<row.length;start++){
+    const first=row[start];
+    if(!/\p{Script=Han}/u.test(first.key)){joined.push(first);continue;}
+    let best=start,lexeme=first.lexeme;
+    for(let end=start+1;end<row.length;end++){
+      const next=row[end];
+      if(!row[end-1].word.endsWith(row[end-1].lexeme)||!next.word.startsWith(next.lexeme)||!/^[ぁ-ゖ]+$/u.test(next.lexeme))break;
+      lexeme+=next.lexeme;
+      const suffix=lexeme.match(/[ぁ-ゖ]+$/u)?.[0]||"";
+      if(suffix.length>14)break;
+      if(inflection.test(suffix))best=end;
+    }
+    if(best===start){joined.push(first);continue;}
+    const group=row.slice(start,best+1);
+    const combined=group.map(t=>t.lexeme).join("");
+    joined.push({...first,key:combined,lexeme:combined,word:group.map(t=>t.word).join("")});
+    start=best;
+  }
+  return joined;
+}
+
 function japaneseReading(word) {
   const normal=word.normalize("NFKC");
   if (japaneseCommonReadings.has(normal)) return japaneseCommonReadings.get(normal);
-  if (/^[ぁ-ゖァ-ヺー]+$/u.test(normal)) {
-    return normal.replace(/[ぁ-ゖ]/gu,c=>String.fromCharCode(c.charCodeAt(0)+96));
-  }
-  return "";
+  const parts=normal.match(/^(\p{Script=Han}+)([ぁ-ゖ]+)$/u);
+  const stem=parts&&(kanaVerbStems.get(parts[1])||(parts[1]==="食"&&parts[2].startsWith("べ")?"た":""));
+  const kana=stem?stem+parts[2]:normal;
+  return /^[ぁ-ゖァ-ヺー]+$/u.test(kana)?kana.replace(/[ぁ-ゖ]/gu,c=>String.fromCharCode(c.charCodeAt(0)+96)):"";
 }
 
 const moraRows={
@@ -1691,7 +1729,7 @@ function knownResult(text,lang,form="female",from="ja"){
 }
 
 async function japaneseResult(text,raw,from,signal,progress) {
-  const lines=tokenize(raw,"ja"),tokens=lines.flat();
+  const lines=tokenize(raw,"ja").map(joinJapaneseInflections),tokens=lines.flat();
   const words=[...new Set(tokens.map(t=>t.key).filter(Boolean))];
   const vocab=presetVocabulary("ja");
   for(const t of tokens)t.reading=vocab.get(t.key)?.reading||japaneseReading(t.key);
@@ -1702,7 +1740,10 @@ async function japaneseResult(text,raw,from,signal,progress) {
     let entry=glossCache.get(cacheKey);
     if(!entry){
       try{
-        const response=await translateText(word,"ja",from,signal,true);
+        const particle=japaneseParticles.get(word);
+        const response=particle
+          ?from==="en"?{translated:particle}:await translateText(particle,"en",from,signal)
+          :await translateText(word,"ja",from,signal,true);
         const candidate=response.translated.trim();
         const meaning=norm(candidate)===norm(word) && from!=="zh-CN" && from!=="zh-TW" && from!=="yue" ? "" : candidate;
         entry={meaning,reading:vocab.get(word)?.reading||japaneseReading(word)||romanizedJapaneseReading(response.transcription)};
