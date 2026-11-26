@@ -44,17 +44,22 @@ h1{font-size:clamp(36px,3.7vw,55px);line-height:1.28;letter-spacing:-.075em;font
 .language-section{padding:24px 0 21px}
 .section-label{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:750;letter-spacing:.005em}
 .section-label .icon{width:18px;height:18px}
-.language-list{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.language-trigger{margin-top:10px}
 .lang-chip{border:1px solid var(--line);border-radius:7px;min-height:39px;padding:7px 14px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:13px;font-weight:650;background:white;white-space:nowrap;transition:border-color .15s,background .15s}
 .flag{width:22px;height:16.5px;object-fit:cover;border-radius:2px;outline:1px solid #0001;outline-offset:-1px;display:block;flex:none}
 .lang-chip:hover,.phrase-card:hover{background:var(--soft);border-color:#91918c}
-.lang-chip[aria-pressed="true"],.lang-chip.is-selected{background:var(--ink);border-color:var(--ink);color:white}
-.language-picker{position:relative}
 .language-caption{display:inline-flex;align-items:center;gap:inherit}
-.language-picker .icon{width:15px;height:15px}
-.language-picker select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit}
-.language-picker select option{color:#181818;background:#fff}
-.language-picker:focus-within{outline:2px solid var(--ink);outline-offset:4px}
+.language-trigger .icon{width:14px;height:14px;color:var(--muted);margin-left:4px}
+#language-dialog{width:min(580px,calc(100% - 28px));overscroll-behavior:contain}
+.language-palette{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:16px}
+.language-tile{display:grid;grid-template-columns:auto minmax(0,1fr) 13px;align-items:center;gap:8px;min-height:51px;padding:8px 10px;text-align:left;border:1px solid var(--line);border-radius:7px;background:white;font-size:13px;font-weight:650;line-height:1.4}
+.language-tile:hover{background:var(--soft);border-color:#91918c}
+.language-tile[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.language-tile-label{min-width:0;overflow-wrap:anywhere}
+.language-tile-label small{display:block;color:var(--muted);font-size:11px;font-weight:400}
+.language-tile .icon{width:13px;height:13px;visibility:hidden;stroke-width:2.5}
+.language-tile[aria-pressed="true"] .icon{visibility:visible}
+@media(max-width:520px){.language-palette{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:12px}.language-tile{gap:6px;padding:7px 8px}}
 .workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:stretch}
 .panel{border:1px solid #cececa;border-radius:12px;min-width:0;overflow:hidden;background:white;display:flex;flex-direction:column;box-shadow:0 2px 3px #00000003}
 .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px 12px 20px;min-height:56px;border-bottom:1px solid var(--line);background:#fafaf8}
@@ -147,7 +152,7 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
 @media(max-width:1000px){.wrap{width:calc(100% - 56px)}.intro{padding:29px 0}.workspace{gap:12px}.lang-chip{padding:7px 11px}.input-pad{padding:18px 17px 8px}.input-actions{padding:12px 17px 16px}.output-body{padding:18px 16px;min-height:222px}.word-row{gap:15px 12px}.phrase-card{padding:12px}.panel-header{padding-inline:14px}.word-lines{margin-bottom:19px}}
 @media(max-width:740px){.wrap{width:calc(100% - 32px);max-width:580px}.top-inner{height:54px}.brand{font-size:19px}.brand img{width:29px;height:29px}.intro{gap:12px;padding:23px 0 21px}.intro p{font-size:12px;margin-top:8px}.reading-key{display:none}h1{font-size:35px}.language-section{padding:17px 0 15px}.language-list{gap:6px;margin-top:9px}.lang-chip{font-size:12px;min-height:35px;padding:5px 9px;gap:6px}.flag{width:19px;height:14.25px}.workspace{grid-template-columns:1fr;gap:12px}.panel-header{min-height:45px;padding:8px 13px}.panel-header h2{font-size:15px}.input-pad{min-height:91px;padding:13px 15px 3px}textarea{font-size:19px;min-height:56px;height:56px;flex:none}.counter{margin-top:0}.input-actions{padding:8px 14px 13px}.primary{min-height:38px}.output-body{min-height:186px;padding:17px 15px 15px}.foreign{font-size:32px}.word-lines{margin:0 0 18px}.word-row{gap:15px 13px}.phrases{margin-top:22px}.phrase-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.phrase-card{min-height:66px}.page-note{margin:18px 0 24px}.partial-note{margin:0 15px 12px}}
 @media(max-width:370px){.wrap{width:calc(100% - 24px)}.phrase-card strong{font-size:12px}.word-row{column-gap:10px}.word .foreign{font-size:28px}}
-@media(pointer:coarse){.lang-chip{min-height:44px}.language-picker select{font-size:16px}}
+@media(pointer:coarse){.lang-chip{min-height:44px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1.5s!important;transition:none!important}}
 
 </style>
@@ -156,7 +161,7 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
   <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <symbol id="ic-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 0 1 4.9.6c0 1.8-2.5 2.1-2.5 3.9m0 3h.01"/></symbol>
     <symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
-    <symbol id="ic-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="ic-palette" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6" height="6" rx="1.2"/><rect x="14.5" y="3.5" width="6" height="6" rx="1.2"/><rect x="3.5" y="14.5" width="6" height="6" rx="1.2"/><rect x="14.5" y="14.5" width="6" height="6" rx="1.2"/></symbol>
     <symbol id="ic-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 5V4a1 1 0 0 0-1-1H5a2 2 0 0 0-2 2v10a1 1 0 0 0 1 1h1"/></symbol>
     <symbol id="ic-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
     <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M3 12h17m-6-6 6 6-6 6"/></symbol>
@@ -189,16 +194,10 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
 
     <section class="language-section" aria-labelledby="language-title">
       <h2 id="language-title" class="section-label"><svg class="icon"><use href="#ic-globe"/></svg>翻訳先の言語</h2>
-      <div class="language-list" role="group" aria-labelledby="language-title">
-        <button id="english-language" class="lang-chip" type="button" aria-label="英語（アメリカ）" aria-pressed="true">英語</button>
-        <div id="language-picker" class="lang-chip language-picker">
-          <span id="language-caption" class="language-caption" aria-hidden="true">その他の言語</span>
-          <svg class="icon" aria-hidden="true"><use href="#ic-chevron"/></svg>
-          <select id="other-language" aria-label="その他の言語">
-            <option value="" selected disabled hidden>その他の言語</option>
-          </select>
-        </div>
-      </div>
+      <button id="language-open" class="lang-chip language-trigger" type="button" aria-haspopup="dialog" aria-controls="language-dialog" aria-expanded="false">
+        <span id="language-caption" class="language-caption">英語</span>
+        <svg class="icon small" aria-hidden="true"><use href="#ic-palette"/></svg>
+      </button>
     </section>
 
     <div class="workspace">
@@ -270,6 +269,10 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
     <footer class="page-note"><svg class="icon small"><use href="#ic-info"/></svg>カタカナの太字は、強めに読む音です。</footer>
   </main>
 
+  <dialog id="language-dialog" aria-labelledby="palette-title">
+    <div class="dialog-head"><h2 id="palette-title">翻訳先の言語を選ぶ</h2><button class="icon-button" type="button" data-close="language-dialog" aria-label="閉じる"><svg class="icon"><use href="#ic-close"/></svg></button></div>
+    <div id="language-palette" class="language-palette" role="group" aria-labelledby="palette-title"></div>
+  </dialog>
   <dialog id="profile-dialog" aria-labelledby="profile-title">
     <div class="dialog-head"><h2 id="profile-title">話し方の設定</h2><button class="icon-button" type="button" data-close="profile-dialog" aria-label="閉じる"><svg class="icon"><use href="#ic-close"/></svg></button></div>
     <div class="profile-body">
@@ -1872,10 +1875,9 @@ const byId=id=>document.getElementById(id);
 const source=byId("source"), manual=byId("translate"), automatic=byId("auto");
 const words=byId("words"), literal=byId("literal"), literalBox=byId("literal-box");
 const message=byId("message"), partialNote=byId("partial-note"), copy=byId("copy"), speak=byId("speak");
-const englishLanguage=langById.get("en");
-const englishButton=byId("english-language");
-const otherLanguages=byId("other-language");
-let lang=langById.get(readSetting("language"))||englishLanguage;
+const languageTrigger=byId("language-open"), languageDialog=byId("language-dialog");
+const languageButtons=new Map();
+let lang=langById.get(readSetting("language"))||langById.get("en");
 let speaker=readSetting("guest-default")==="male"?"male":"female",speakerOverride=false;
 let activeResult=null,revision=0,timer,controller,composing=false,copyTimer,speech;
 const filePreview=window.self!==window.top && [location.href,document.referrer,...(location.ancestorOrigins||[])].some(url=>url.startsWith("about:")||/web-sandbox\.oaiusercontent\.com|chatgpt\.com\/library/.test(url));
@@ -1900,30 +1902,30 @@ function flag(language){
 }
 function button(className){const b=element("button",className);b.type="button";return b;}
 function announce(text){byId("live").textContent=text;}
-function choose(language){
-  lang=language;writeSetting("language",lang.id);updateLanguage();
-  run(true);
-}
-englishButton.prepend(flag(englishLanguage));
-englishButton.addEventListener("click",()=>choose(englishLanguage));
 for(const language of languages){
-  if(language.id===englishLanguage.id)continue;
-  const option=element("option","",language.name+"（"+language.country+"）");
-  option.value=language.id;
-  otherLanguages.append(option);
+  const choice=button("language-tile"),label=element("span","language-tile-label");
+  label.append(element("span","",language.name),element("small","",language.country));
+  choice.append(flag(language),label,icon("check"));
+  choice.addEventListener("click",()=>{
+    languageDialog.close();
+    if(language.id===lang.id)return;
+    lang=language;writeSetting("language",lang.id);updateLanguage();run(true);
+  });
+  languageButtons.set(language.id,choice);
+  byId("language-palette").append(choice);
 }
-otherLanguages.addEventListener("change",()=>choose(langById.get(otherLanguages.value)));
+languageTrigger.addEventListener("click",()=>{
+  languageDialog.showModal();languageTrigger.setAttribute("aria-expanded","true");
+  languageButtons.get(lang.id).focus();
+});
+languageDialog.addEventListener("close",()=>{
+  languageTrigger.setAttribute("aria-expanded","false");
+  languageTrigger.focus({preventScroll:true});
+});
 function updateLanguage(){
-  const isEnglish=lang.id===englishLanguage.id;
-  englishButton.setAttribute("aria-pressed",String(isEnglish));
-  otherLanguages.value=isEnglish?"":lang.id;
-  byId("language-picker").classList.toggle("is-selected",!isEnglish);
-  const caption=byId("language-caption");
-  if(isEnglish){
-    caption.textContent="その他の言語";
-  }else{
-    caption.replaceChildren(flag(lang),lang.name);
-  }
+  byId("language-caption").replaceChildren(flag(lang),lang.name);
+  languageTrigger.setAttribute("aria-label","翻訳先の言語を変更、現在は"+lang.name+"（"+lang.country+"）");
+  for(const [id,choice] of languageButtons)choice.setAttribute("aria-pressed",String(id===lang.id));
   byId("target-code").textContent=lang.code;
   words.lang=lang.locale;
 }
