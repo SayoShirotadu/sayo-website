@@ -31,24 +31,23 @@ button:disabled{cursor:default;opacity:.46}
 .help-link{font-size:13px;gap:7px}
 .help-link .icon{width:17px;height:17px}
 h1,h2,h3,p{margin:0}
-.reading-key{display:grid;grid-template-columns:80px 30px auto;grid-template-rows:18px 32px 19px;align-items:center;justify-items:start;column-gap:7px;position:relative;padding:5px 12px 4px 22px;color:#575752;font-size:11px;line-height:1.2;flex-shrink:0}
+.reading-key{display:grid;grid-template-columns:minmax(0,max-content) minmax(10px,26px) max-content;grid-template-rows:minmax(18px,auto) minmax(32px,auto) minmax(19px,auto);align-items:center;justify-items:start;column-gap:7px;position:relative;padding:5px 12px 4px 22px;color:#575752;font-size:11px;line-height:1.2;min-width:0;align-self:center}
 .reading-key:before{content:"";position:absolute;width:2px;top:0;bottom:0;left:0;background:repeating-linear-gradient(to bottom,#c0c0ba 0 2px,transparent 2px 5px)}
 .reading-key>i{width:100%;height:1px;background:#d0d0c9}
-.reading-key>:nth-child(3n+1){justify-self:center}
+.reading-key>:nth-child(3n+1){justify-self:center;min-width:0;max-width:100%;overflow-wrap:anywhere;text-align:center}
 .reading-key b{font-family:"Baskervville","STIX Two Text",Georgia,serif;font-size:31px;font-weight:500;color:var(--ink);letter-spacing:-.045em}
 .key-pron{font-weight:400;color:var(--ink)}
 .key-pron strong,.pronunciation strong{font-weight:850;color:#101010}
 .key-gloss{font-size:11px}
-.language-section{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:23px 0 21px}
+.language-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;min-width:0}
+.source-language-bar{grid-area:input-language}.target-language-bar{grid-area:output-language}
+.source-panel{grid-area:source}.output-panel{grid-area:output}
 .section-label{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:750;letter-spacing:.005em}
 .section-label .icon{width:18px;height:18px}
-.language-pair{display:flex;align-items:flex-end;gap:14px;min-width:0}
 .language-picker{min-width:0}
-.language-pair .section-label{font-size:12px;color:var(--muted);font-weight:650}
-.language-pair .section-label .icon{display:none}
+.language-picker .section-label{font-size:12px;color:var(--muted);font-weight:650}
 .language-trigger{margin-top:6px;max-width:100%}
 .swap-languages{width:36px;min-height:39px;flex:none}
-@media(max-width:740px){.language-pair{gap:7px;width:100%}.language-pair .swap-languages{width:28px}.language-pair .lang-chip{white-space:normal;text-align:left}.language-caption{min-width:0}.language-pair .flag{flex-shrink:0}}
 .lang-chip{border:1px solid var(--line);border-radius:7px;min-height:39px;padding:7px 14px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:13px;font-weight:650;background:white;white-space:nowrap;transition:border-color .15s,background .15s}
 .flag{width:22px;height:16.5px;object-fit:cover;border-radius:2px;outline:1px solid #0001;outline-offset:-1px;display:block;flex:none}
 .lang-chip:hover,.phrase-card:hover{background:var(--soft);border-color:#91918c}
@@ -64,7 +63,7 @@ h1,h2,h3,p{margin:0}
 .language-tile .icon{width:13px;height:13px;visibility:hidden;stroke-width:2.5}
 .language-tile[aria-pressed="true"] .icon{visibility:visible}
 @media(max-width:520px){.language-palette{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:12px}.language-tile{gap:6px;padding:7px 8px}}
-.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:stretch}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"input-language output-language" "source output";column-gap:16px;row-gap:14px;padding-top:23px;align-items:stretch}
 .panel{border:1px solid #cececa;border-radius:12px;min-width:0;overflow:hidden;background:white;display:flex;flex-direction:column;box-shadow:0 2px 3px #00000003}
 .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px 12px 20px;min-height:56px;border-bottom:1px solid var(--line);background:#fafaf8}
 .panel-header h2{display:flex;align-items:center;gap:9px;font-size:16px;letter-spacing:-.025em;font-weight:750}
@@ -152,13 +151,16 @@ dialog::backdrop{background:rgb(22 22 20/.32)}
 .help-body .help-foot{border-top:1px solid var(--line);padding-top:12px;margin-top:16px;font-size:12px}
 kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-size:.9em}
 .sr-only{position:absolute;clip:rect(0,0,0,0);clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
-@media(min-width:1450px){.output-body{min-height:255px}.language-section{padding-block:27px}.phrases{margin-top:32px}}
-@media(max-width:1000px){.wrap{width:calc(100% - 56px)}.workspace{gap:12px}.lang-chip{padding:7px 11px}.input-pad{padding:18px 17px 8px}.input-actions{padding:12px 17px 16px}.output-body{padding:18px 16px;min-height:222px}.word-row{gap:15px 12px}.phrase-card{padding:12px}.panel-header{padding-inline:14px}.word-lines{margin-bottom:19px}}
-@media(max-width:740px){.wrap{width:calc(100% - 32px);max-width:580px}.top-inner{min-height:86px;gap:12px;padding-block:12px}.brand{gap:10px}.brand-tiger{width:55px;height:55px}.brand h1{font-size:29px}.brand p{margin-top:4px;font-size:11px;letter-spacing:.025em}.reading-key{display:none}.language-section{padding:17px 0 15px}.language-list{gap:6px;margin-top:9px}.lang-chip{font-size:12px;min-height:35px;padding:5px 9px;gap:6px}.flag{width:19px;height:14.25px}.workspace{grid-template-columns:1fr;gap:12px}.panel-header{min-height:45px;padding:8px 13px}.panel-header h2{font-size:15px}.input-pad{min-height:91px;padding:13px 15px 3px}textarea{font-size:19px;min-height:56px;height:56px;flex:none}.counter{margin-top:0}.input-actions{padding:8px 14px 13px}.primary{min-height:38px}.output-body{min-height:186px;padding:17px 15px 15px}.foreign{font-size:32px}.word-lines{margin:0 0 18px}.word-row{gap:15px 13px}.phrases{margin-top:22px}.phrase-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.phrase-card{min-height:66px}.page-note{margin:18px 0 24px}.partial-note{margin:0 15px 12px}}
+@media(min-width:1450px){.output-body{min-height:255px}.workspace{padding-top:27px}.phrases{margin-top:32px}}
+@media(max-width:1000px){.wrap{width:calc(100% - 56px)}.workspace{column-gap:12px}.reading-key{column-gap:5px;padding-inline:12px 0}.lang-chip{padding:7px 11px}.input-pad{padding:18px 17px 8px}.input-actions{padding:12px 17px 16px}.output-body{padding:18px 16px;min-height:222px}.word-row{gap:15px 12px}.phrase-card{padding:12px}.panel-header{padding-inline:14px}.word-lines{margin-bottom:19px}}
+@media(max-width:740px){.wrap{width:calc(100% - 32px);max-width:580px}.top-inner{min-height:86px;gap:12px;padding-block:12px}.brand{gap:10px}.brand-tiger{width:55px;height:55px}.brand h1{font-size:29px}.brand p{margin-top:4px;font-size:11px;letter-spacing:.025em}.reading-key{display:none}.lang-chip{font-size:12px;min-height:35px;padding:5px 9px;gap:6px}.flag{width:19px;height:14.25px}.workspace{grid-template-columns:minmax(0,1fr);grid-template-areas:"input-language" "source" "output-language" "output";row-gap:8px;padding-top:17px}.target-language-bar{margin-top:9px}.panel-header{min-height:45px;padding:8px 13px}.panel-header h2{font-size:15px}.input-pad{min-height:91px;padding:13px 15px 3px}textarea{font-size:19px;min-height:56px;height:56px;flex:none}.counter{margin-top:0}.input-actions{padding:8px 14px 13px}.primary{min-height:38px}.output-body{min-height:186px;padding:17px 15px 15px}.foreign{font-size:32px}.word-lines{margin:0 0 18px}.word-row{gap:15px 13px}.phrases{margin-top:22px}.phrase-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.phrase-card{min-height:66px}.page-note{margin:18px 0 24px}.partial-note{margin:0 15px 12px}}
 @media(max-width:440px){.top-tools{flex-wrap:nowrap;gap:1px}.top-tools .quiet{min-height:36px;padding-inline:5px;font-size:12px;white-space:nowrap}#help-open{width:34px}#help-open span{display:none}}
 @media(max-width:370px){.wrap{width:calc(100% - 24px)}.phrase-card strong{font-size:12px}.word-row{column-gap:10px}.word .foreign{font-size:28px}}
 @media(pointer:coarse){.lang-chip{min-height:44px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1.5s!important;transition:none!important}}
+.public-plans{border-top:1px solid var(--line);margin-top:16px;padding-top:12px}
+.public-plans h3{margin:0 0 6px;font-size:1rem}
+.public-plans p{margin:4px 0 8px;font-size:.85rem;line-height:1.65}
 
 </style>
 </head>
@@ -191,8 +193,8 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
     </div>
   </header>
   <main class="wrap">
-    <section class="language-section" aria-label="翻訳する言語">
-      <div class="language-pair">
+    <div class="workspace">
+      <div class="language-bar source-language-bar">
         <div class="language-picker">
           <h2 class="section-label">入力する言語</h2>
           <button id="input-language-open" class="lang-chip language-trigger" type="button" aria-haspopup="dialog" aria-controls="language-dialog" aria-expanded="false">
@@ -201,22 +203,7 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
           </button>
         </div>
         <button id="swap-languages" class="quiet swap-languages" type="button" title="言語を入れ替える" aria-label="入力言語と翻訳先を入れ替える"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></svg></button>
-      <div class="language-picker">
-        <h2 id="language-title" class="section-label"><svg class="icon"><use href="#ic-globe"/></svg>翻訳先の言語</h2>
-        <button id="language-open" class="lang-chip language-trigger" type="button" aria-haspopup="dialog" aria-controls="language-dialog" aria-expanded="false">
-          <span id="language-caption" class="language-caption">英語</span>
-          <svg class="icon small" aria-hidden="true"><use href="#ic-palette"/></svg>
-        </button>
       </div>
-      </div>
-      <div class="reading-key" id="reading-legend-example" aria-label="表示の見方。上からカタカナの読み方、訳文、単語の意味です。太字は強めに読む音です。">
-        <span class="key-pron" aria-hidden="true">ハ<strong>ロー</strong></span><i></i><span aria-hidden="true">読み方</span>
-        <b lang="en" aria-hidden="true">Hello</b><i></i><span aria-hidden="true">訳文</span>
-        <span class="key-gloss" aria-hidden="true">こんにちは</span><i></i><span aria-hidden="true">単語の意味</span>
-      </div>
-    </section>
-
-    <div class="workspace">
       <section class="panel source-panel" aria-labelledby="source-heading">
         <div class="panel-header">
           <h2 id="source-heading"><span class="code" id="source-code">JA</span><label id="input-label" for="source">日本語入力</label></h2>
@@ -236,6 +223,20 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
         </div>
       </section>
 
+      <div class="language-bar target-language-bar">
+        <div class="language-picker">
+          <h2 id="language-title" class="section-label">翻訳先の言語</h2>
+          <button id="language-open" class="lang-chip language-trigger" type="button" aria-haspopup="dialog" aria-controls="language-dialog" aria-expanded="false">
+            <span id="language-caption" class="language-caption">英語</span>
+            <svg class="icon small" aria-hidden="true"><use href="#ic-palette"/></svg>
+          </button>
+        </div>
+        <div class="reading-key" id="reading-legend-example" aria-label="表示の見方。上からカタカナの読み方、訳文、単語の意味です。太字は強めに読む音です。">
+          <span class="key-pron" aria-hidden="true">ハ<strong>ロー</strong></span><i></i><span aria-hidden="true">読み方</span>
+          <b lang="en" aria-hidden="true">Hello</b><i></i><span aria-hidden="true">訳文</span>
+          <span class="key-gloss" aria-hidden="true">こんにちは</span><i></i><span aria-hidden="true">単語の意味</span>
+        </div>
+      </div>
       <section class="panel output-panel" aria-labelledby="output-heading">
         <div class="panel-header">
           <h2 id="output-heading"><span id="target-code" class="code dark">EN</span>翻訳結果</h2>
@@ -304,6 +305,12 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
         <button class="quiet" type="button" id="profile-retry" hidden>再接続</button>
       </div>
       <p id="profile-status" class="fine-print" role="status"></p>
+      <section class="public-plans" aria-labelledby="public-plans-title">
+        <h3 id="public-plans-title">AI精査プラン</h3>
+        <p>30日パスは300円の1回払いで、購入から30日間に30回。月額プランは毎月300円で30回、自動更新です。どちらも税込です。</p>
+        <p>新規のお申し込みは準備中です。</p>
+        <a class="text-link" href="https://billing.stripe.com/p/login/cNi8wPemf0Yj3r37Ho38400" target="_blank" rel="noopener noreferrer">月額契約の管理・解約（Stripe）</a>
+      </section>
       <a id="profile-public" class="text-link" href="https://sayoshirotadu.github.io/sayo-website/yomitora/" target="_blank" rel="noopener noreferrer" hidden>設定を同期するには公開版を開く</a>
     </div>
   </dialog>
@@ -315,7 +322,7 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
       <h3>会話の定番フレーズ</h3><p>フレーズを押すと、その言葉が入力欄に入り、選んだ言語の訳がすぐに表示されます。</p>
       <h3>話し手の表現を選ぶ</h3><p>入力欄で女性形・男性形を切り替えられます。たとえばポルトガル語の「ありがとう」は Obrigada／Obrigado です。話し手による違いがない文は同じ訳になります。よく使う方は「ログイン・設定」で既定値にできます。</p>
       <h3>訳をAIでチェック</h3><p>原文と訳文の意味や会話での自然さを見比べます。タガログ語の定番訳には事前レビューがあります。対応端末ではその場で端末内AIが精査します。クラウドAIを選ぶと、原文・訳文・話し方を Puter のAIに送ります。利用枠や料金は利用者の Puter プランに従います。</p>
-      <h3>相手に合わせた言い換え（準備中）</h3><p>月額300円（税込）のプランでは「カジュアル」「親しい相手」「丁寧」から選べる予定です。AIの精査と言い換えを合わせて月30回。通常の翻訳とカタカナの読み方は無料です。</p>
+      <h3>相手に合わせた言い換え（準備中）</h3><p>AI精査では「カジュアル」「親しい相手」「丁寧」から選べる予定です。30日パスは税込300円の1回払いで30日間に30回。月額プランは税込300円で毎月30回です。通常の翻訳とカタカナの読み方は無料です。</p>
       <p class="help-foot">定番フレーズや一部の自己紹介は端末内で翻訳できます。自由入力では、原文・単語・必要に応じて選んだ話し方を MyMemory または Google 翻訳に送ることがあります。アカウントに保存するのは話し方の既定値だけです。</p>
     </div>
   </dialog>
