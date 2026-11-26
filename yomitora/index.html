@@ -47,11 +47,14 @@ h1{font-size:clamp(36px,3.7vw,55px);line-height:1.28;letter-spacing:-.075em;font
 .language-list{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
 .lang-chip{border:1px solid var(--line);border-radius:7px;min-height:39px;padding:7px 14px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:13px;font-weight:650;background:white;white-space:nowrap;transition:border-color .15s,background .15s}
 .flag{width:22px;height:16.5px;object-fit:cover;border-radius:2px;outline:1px solid #0001;outline-offset:-1px;display:block;flex:none}
-.lang-chip:hover,.phrase-card:hover,.country:hover{background:var(--soft);border-color:#91918c}
+.lang-chip:hover,.phrase-card:hover{background:var(--soft);border-color:#91918c}
 .lang-chip[aria-pressed="true"],.lang-chip.is-selected{background:var(--ink);border-color:var(--ink);color:white}
-.lang-chip.more{color:#4e4e4b;font-weight:550}
-.lang-chip.more.is-selected{color:white}
-.more .icon{width:15px;height:15px}
+.language-picker{position:relative}
+.language-caption{display:inline-flex;align-items:center;gap:inherit}
+.language-picker .icon{width:15px;height:15px}
+.language-picker select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit}
+.language-picker select option{color:#181818;background:#fff}
+.language-picker:focus-within{outline:2px solid var(--ink);outline-offset:4px}
 .workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:stretch}
 .panel{border:1px solid #cececa;border-radius:12px;min-width:0;overflow:hidden;background:white;display:flex;flex-direction:column;box-shadow:0 2px 3px #00000003}
 .panel-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px 12px 20px;min-height:56px;border-bottom:1px solid var(--line);background:#fafaf8}
@@ -133,13 +136,6 @@ dialog::backdrop{background:rgb(22 22 20/.32)}
 .dialog-head{position:sticky;top:0;z-index:1;background:white;display:flex;align-items:center;justify-content:space-between;padding:17px 21px;border-bottom:1px solid var(--line)}
 .dialog-head h2{font-size:20px;font-weight:750}
 .icon-button{width:34px;height:34px}
-.country-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:15px}
-.country{display:flex;align-items:center;text-align:left;gap:10px;padding:9px 11px;min-height:51px;border:1px solid transparent;border-radius:8px}
-.country[aria-pressed="true"]{background:var(--soft);border-color:var(--ink)}
-.country .flag{width:27px;height:20.25px}
-.country-text{display:grid;line-height:1.4}
-.country-text b{font-size:13px}.country-text small{font-size:11px;color:var(--muted)}
-.country .icon{margin-left:auto;width:15px;height:15px}
 .help-body{padding:20px 22px 23px}
 .help-body h3{font-size:15px;margin:16px 0 4px}
 .help-body h3:first-child{margin-top:0}
@@ -150,7 +146,8 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
 @media(min-width:1450px){.intro{padding-block:44px 40px}.output-body{min-height:255px}.language-section{padding-block:27px}.phrases{margin-top:32px}}
 @media(max-width:1000px){.wrap{width:calc(100% - 56px)}.intro{padding:29px 0}.workspace{gap:12px}.lang-chip{padding:7px 11px}.input-pad{padding:18px 17px 8px}.input-actions{padding:12px 17px 16px}.output-body{padding:18px 16px;min-height:222px}.word-row{gap:15px 12px}.phrase-card{padding:12px}.panel-header{padding-inline:14px}.word-lines{margin-bottom:19px}}
 @media(max-width:740px){.wrap{width:calc(100% - 32px);max-width:580px}.top-inner{height:54px}.brand{font-size:19px}.brand img{width:29px;height:29px}.intro{gap:12px;padding:23px 0 21px}.intro p{font-size:12px;margin-top:8px}.reading-key{display:none}h1{font-size:35px}.language-section{padding:17px 0 15px}.language-list{gap:6px;margin-top:9px}.lang-chip{font-size:12px;min-height:35px;padding:5px 9px;gap:6px}.flag{width:19px;height:14.25px}.workspace{grid-template-columns:1fr;gap:12px}.panel-header{min-height:45px;padding:8px 13px}.panel-header h2{font-size:15px}.input-pad{min-height:91px;padding:13px 15px 3px}textarea{font-size:19px;min-height:56px;height:56px;flex:none}.counter{margin-top:0}.input-actions{padding:8px 14px 13px}.primary{min-height:38px}.output-body{min-height:186px;padding:17px 15px 15px}.foreign{font-size:32px}.word-lines{margin:0 0 18px}.word-row{gap:15px 13px}.phrases{margin-top:22px}.phrase-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.phrase-card{min-height:66px}.page-note{margin:18px 0 24px}.partial-note{margin:0 15px 12px}}
-@media(max-width:370px){.wrap{width:calc(100% - 24px)}.country-grid{grid-template-columns:1fr}.phrase-card strong{font-size:12px}.word-row{column-gap:10px}.word .foreign{font-size:28px}}
+@media(max-width:370px){.wrap{width:calc(100% - 24px)}.phrase-card strong{font-size:12px}.word-row{column-gap:10px}.word .foreign{font-size:28px}}
+@media(pointer:coarse){.lang-chip{min-height:44px}.language-picker select{font-size:16px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1.5s!important;transition:none!important}}
 
 </style>
@@ -192,8 +189,15 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
 
     <section class="language-section" aria-labelledby="language-title">
       <h2 id="language-title" class="section-label"><svg class="icon"><use href="#ic-globe"/></svg>翻訳先の言語</h2>
-      <div id="languages" class="language-list" aria-labelledby="language-title">
-        <button id="more-languages" class="lang-chip more" type="button" aria-haspopup="dialog"><span id="more-name">その他の言語</span><svg class="icon"><use href="#ic-chevron"/></svg></button>
+      <div class="language-list" role="group" aria-labelledby="language-title">
+        <button id="english-language" class="lang-chip" type="button" aria-label="英語（アメリカ）" aria-pressed="true">英語</button>
+        <div id="language-picker" class="lang-chip language-picker">
+          <span id="language-caption" class="language-caption" aria-hidden="true">その他の言語</span>
+          <svg class="icon" aria-hidden="true"><use href="#ic-chevron"/></svg>
+          <select id="other-language" aria-label="その他の言語">
+            <option value="" selected disabled hidden>その他の言語</option>
+          </select>
+        </div>
       </div>
     </section>
 
@@ -266,10 +270,6 @@ kbd{border-radius:3px;background:var(--soft);padding:1px 4px;font:inherit;font-s
     <footer class="page-note"><svg class="icon small"><use href="#ic-info"/></svg>カタカナの太字は、強めに読む音です。</footer>
   </main>
 
-  <dialog id="language-dialog" aria-labelledby="picker-title">
-    <div class="dialog-head"><h2 id="picker-title">翻訳先を選ぶ</h2><button class="icon-button" data-close="language-dialog" type="button" aria-label="閉じる"><svg class="icon"><use href="#ic-close"/></svg></button></div>
-    <div id="country-list" class="country-grid"></div>
-  </dialog>
   <dialog id="profile-dialog" aria-labelledby="profile-title">
     <div class="dialog-head"><h2 id="profile-title">話し方の設定</h2><button class="icon-button" type="button" data-close="profile-dialog" aria-label="閉じる"><svg class="icon"><use href="#ic-close"/></svg></button></div>
     <div class="profile-body">
@@ -325,7 +325,6 @@ const languages = [
 ];
 
 const langById = new Map(languages.map(entry => [entry.id, entry]));
-const featured = languages.slice(0, 7);
 
 
 const snippets = [
@@ -1873,8 +1872,10 @@ const byId=id=>document.getElementById(id);
 const source=byId("source"), manual=byId("translate"), automatic=byId("auto");
 const words=byId("words"), literal=byId("literal"), literalBox=byId("literal-box");
 const message=byId("message"), partialNote=byId("partial-note"), copy=byId("copy"), speak=byId("speak");
-const picker=byId("language-dialog");
-let lang=langById.get(readSetting("language"))||languages[0];
+const englishLanguage=langById.get("en");
+const englishButton=byId("english-language");
+const otherLanguages=byId("other-language");
+let lang=langById.get(readSetting("language"))||englishLanguage;
 let speaker=readSetting("guest-default")==="male"?"male":"female",speakerOverride=false;
 let activeResult=null,revision=0,timer,controller,composing=false,copyTimer,speech;
 const filePreview=window.self!==window.top && [location.href,document.referrer,...(location.ancestorOrigins||[])].some(url=>url.startsWith("about:")||/web-sandbox\.oaiusercontent\.com|chatgpt\.com\/library/.test(url));
@@ -1901,44 +1902,32 @@ function button(className){const b=element("button",className);b.type="button";r
 function announce(text){byId("live").textContent=text;}
 function choose(language){
   lang=language;writeSetting("language",lang.id);updateLanguage();
-  if(picker.open)picker.close();
   run(true);
 }
-for(const language of featured){
-  const b=button("lang-chip");
-  b.dataset.language=language.id;b.setAttribute("aria-label",language.name+"（"+language.country+"）");
-  b.title=language.country+"・"+language.name;
-  b.append(flag(language),element("span","",language.name));
-  b.addEventListener("click",()=>choose(language));
-  byId("languages").insertBefore(b,byId("more-languages"));
-}
+englishButton.prepend(flag(englishLanguage));
+englishButton.addEventListener("click",()=>choose(englishLanguage));
 for(const language of languages){
-  const b=button("country");b.dataset.language=language.id;
-  const name=element("span","country-text");
-  name.append(element("b","",language.name),element("small","",language.country));
-  b.append(flag(language),name,icon("check"));
-  b.addEventListener("click",()=>choose(language));byId("country-list").append(b);
+  if(language.id===englishLanguage.id)continue;
+  const option=element("option","",language.name+"（"+language.country+"）");
+  option.value=language.id;
+  otherLanguages.append(option);
 }
+otherLanguages.addEventListener("change",()=>choose(langById.get(otherLanguages.value)));
 function updateLanguage(){
-  for(const b of document.querySelectorAll("[data-language]")){
-    const selected=b.dataset.language===lang.id;b.setAttribute("aria-pressed",String(selected));
-    if(b.classList.contains("country"))b.querySelector("svg").style.visibility=selected?"visible":"hidden";
+  const isEnglish=lang.id===englishLanguage.id;
+  englishButton.setAttribute("aria-pressed",String(isEnglish));
+  otherLanguages.value=isEnglish?"":lang.id;
+  byId("language-picker").classList.toggle("is-selected",!isEnglish);
+  const caption=byId("language-caption");
+  if(isEnglish){
+    caption.textContent="その他の言語";
+  }else{
+    caption.replaceChildren(flag(lang),lang.name);
   }
-  const secondary=!featured.includes(lang),more=byId("more-languages");
-  more.classList.toggle("is-selected",secondary);
-  byId("more-name").textContent=secondary?lang.name:"その他の言語";
-  more.querySelector("img")?.remove();
-  if(secondary)more.prepend(flag(lang));
-  more.setAttribute("aria-label",secondary?"現在は"+lang.country+"の"+lang.name+"。翻訳先を選ぶ":"その他の国・地域と言語を選ぶ");
   byId("target-code").textContent=lang.code;
   words.lang=lang.locale;
 }
-function openDialog(id){
-  const d=byId(id);d.showModal();
-  if(id==="language-dialog")d.querySelector('[aria-pressed="true"]')?.focus();
-}
-byId("more-languages").addEventListener("click",()=>openDialog("language-dialog"));
-byId("help-open").addEventListener("click",()=>openDialog("help-dialog"));
+byId("help-open").addEventListener("click",()=>byId("help-dialog").showModal());
 document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>byId(b.dataset.close).close()));
 document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{
   if(e.target!==d)return;
